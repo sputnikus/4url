@@ -21,8 +21,9 @@ app.debug = True
 def search(name):
     name = name.replace('-', ' ')
     payload = {
-        'intent': 'match',
+        'intent': 'browse',
         'll': '49.1950602,16.6068371',
+        'radius': 50000,
         'query': name,
         'limit': 3,
         'client_id': environ['FOURSQ_ID'],
