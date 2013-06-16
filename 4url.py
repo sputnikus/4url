@@ -11,7 +11,7 @@
 from os import environ
 
 import requests
-from flask import Flask, redirect
+from flask import Flask, redirect, jsonify
 
 app = Flask(__name__)
 app.debug = True
@@ -30,8 +30,11 @@ def search(name):
     }
     r = requests.get(
         'https://api.foursquare.com/v2/venues/search', params=payload)
-    venue = r.json()['response']['groups'][0]['items'][0]
-    return redirect(venue['canonicalUrl'])
+    try:
+        venue = r.json()['response']['groups'][0]['items'][0]
+        return redirect(venue['canonicalUrl'])
+    except IndexError:
+        return jsonify(r.json())
 
 
 if __name__ == '__main__':
